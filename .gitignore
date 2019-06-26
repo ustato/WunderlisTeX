@@ -1,0 +1,9 @@
+*.yaml
+.DS_Store
+
+*.aux
+*.log
+*.dvi
+*.pytxcode
+*.synctex*
+pythontex-files-*
