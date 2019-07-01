@@ -33,7 +33,6 @@ WORKDIR /root/tex
 ADD tex/todolist.py /root/tex/todolist.py
 ADD tex/secret.yaml /root/tex/secret.yaml
 ADD requirements.txt /root/tex/requirements.txt
-ADD tex/test.tex /root/tex/test.tex
 
 # texのスタイル
 ADD tex/additional.sty /root/tex/additional.sty
@@ -43,6 +42,7 @@ RUN pip install -r requirements.txt
 
 
 # TeXをコンパイル
+ADD tex/test.tex /root/tex/test.tex
 RUN platex test.tex
 RUN pythontex test
 RUN platex test.tex

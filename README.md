@@ -12,4 +12,46 @@ WunderlistのタスクをLaTeXで可視化できるようにする
 
 # Demo
 
-[](https://github.com/ustato/WunderlisTeX/blob/master/demo/screenshot_1.png)
+### ToDo List
+![alt](demo/screenshot_1.png)
+
+### Done task for the last week
+![alt](demo/screenshot_2.png)
+
+### Sample PDF
+[Here](tex/test.pdf)
+
+
+# Installation
+
+### Get Wunderlist API's key
+Go [Wunderlist Developer](https://developer.wunderlist.com/) and resistor information.
+Next, get `CLIENT ID` and `CLIENT SECRET`.
+Finally, fix `secret.yaml` in tex directory.
+
+### Install Docker
+Check [Docker Documentation](https://docs.docker.com/) and install docker.
+
+
+# Usage
+
+### LaTeX command
+
+* `\todotable`
+
+    * Making all ToDo list
+
+* `\doneitem`
+
+    * Making done task for the last week
+
+
+### Make PDF
+Execute this command in WunderlisTeX directory.
+~~~sh
+docker build -t <image name> .
+~~~
+
+Now, you can see PDF in [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+
+If you want to know this app, read [Dockerfile](Dockerfile).
