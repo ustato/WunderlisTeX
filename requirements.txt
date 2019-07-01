@@ -1,0 +1,4 @@
+pygments
+pyyaml
+requests_oauthlib
+flask

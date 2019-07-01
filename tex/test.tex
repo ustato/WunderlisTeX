@@ -3,104 +3,66 @@
 % Unicode文字を使用できるようにする
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-
-% 数式の記述に用いる
 \usepackage{amsmath}
+\usepackage{txfonts}
+
+% チェックボックスに用いる
+\usepackage{bbding}
+\usepackage{pifont}
+\usepackage{wasysym}
+\usepackage{amssymb}
+
+% プログレスバーに用いる
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{calc}
+\usepackage{kvsetkeys}
+\usepackage{kvoptions}
+\usepackage{tikz}
+\usepackage{progressbar}
 
 % PythonTeXを利用する
-\usepackage[]{pythontex}
+\usepackage{additional}
+\usepackage{pythontex}
 
 % Pythonの関数をLaTeXのコマンドで呼び出せるようにする
 % 関数は以下で定義
-\newcommand{\iseven}[1]{\py{iseven(#1)}}
+\newcommand{\todotable}[1]{\py{todolist.get_todotable()}}
+\newcommand{\doneitem}[1]{\py{todolist.get_completed_task_in_a_week()}}
 
-\title{Python \TeX のテスト}
-\author{はむ吉（のんびり）}
+
+\title{打ち合わせ資料}
+\author{あざ◎}
 \date{\today}
 
 \begin{document}
 \maketitle
-\section{Hello, Python \TeX !}
+
+% Pythonコードを埋め込む
 \begin{pycode}
-#!/usr/bin/env python2
-import yaml
-import json
-from requests_oauthlib import OAuth2Session
-
-# API tokenを'secret.yaml'から参照する
-yaml_dict = yaml.load(open('../secret.yaml'), Loader=yaml.SafeLoader)
-client_id = yaml_dict['client_id']
-access_token = yaml_dict['access_token']
-
-url = "https://a.wunderlist.com/api/v1/lists"
-params = {}
-
-wunderlist = OAuth2Session()
-wunderlist.headers['X-Client-ID'] = client_id
-wunderlist.headers['X-Access-Token'] = access_token
-req = wunderlist.get(url, params=params)
-
-if req.status_code == 200:
-    lists = json.loads(req.text)
-
-    for list_ in lists:
-        url = "https://a.wunderlist.com/api/v1/tasks"
-        params = {
-                "list_id": list_["id"],
-                "completed": True
-                }
-        done_tasks = json.loads(wunderlist.get(url, params=params).text)
-
-        params["completed"] = False
-        req = wunderlist.get(url, params=params)
-        notdone_tasks = json.loads(wunderlist.get(url, params=params).text)
-
-        tasks = done_tasks + notdone_tasks
-
-        n_tasks = len(tasks)
-        n_dones = len([task for task in tasks if task["completed"]==True])
-        if (n_tasks != 0):
-            print("{0} ({1:.2f} \%)".format(list_["title"], n_dones / n_tasks))
-
-        for task in tasks:
-            print("\\begin{itemize}")
-            if (task["completed"]):
-                print("\\item - {}: done".format(task["title"]))
-            else:
-                print("\\item - {}: not done".format(task["title"]))
-            print("\\end{itemize}")
-else:
-    print("Error: \%d" % req.status_code)
+from todolist import ToDoList
+todolist = ToDoList()
 \end{pycode}
 
-\section{Python側で定義した関数を\LaTeX 側から使う}
-\begin{pycode}
-def iseven(n):
-    if type(n) is not int:
-        return u"{0}は整数ではありません。".format(n)
-    elif n % 2 == 0:
-        return u"{0}は偶数です。".format(n)
-    elif n % 2 == 1:
-        return u"{0}は奇数です。".format(n)
-\end{pycode}
+\section{前回までの打ち合わせ内容}
 \begin{itemize}
-\item \iseven{1024}
-\item \iseven{59049}
-\item \iseven{8.314}
+	\item ``多重トピックテキストの確率モデル（１）'' を読んだ
+	\item ナイーブベイズをラグランジュの未定乗数法で解く（理解してない）
+	\item 抄録提出（実験はしていない）
+	\item 8月はあってないような短さなので，実験計画を立てる
 \end{itemize}
 
-\section{SymPyを利用する}
+\section{今週までにやったこと}
+\doneitem
 
-\begin{sympycode}
-x = symbols("x")
-func = x**4 + x**3 + x**2 + x + 1
+\section{来週やること}
+\begin{itemize}
+	\item 防災コンペの精度向上と発表に使えるようにしたい（実験必須）
+	\item LDAを勉強する（引き続き）
+	\item ゼミはLDA関連をやる
+\end{itemize}
 
-print(r"\begin{align}")
-for n in range(1, 5):
-    deriv = Derivative(func, x, n)
-    print("{0} &= {1}".format(latex(deriv), latex(deriv.doit())))
-    if n < 4:
-        print(r"\\")
-print(r"\end{align}")
-\end{sympycode}
+\clearpage
+\section{やること，やったこと}
+\todotable
+
 \end{document}

@@ -7,3 +7,4 @@
 *.pytxcode
 *.synctex*
 pythontex-files-*
+__pycache__
