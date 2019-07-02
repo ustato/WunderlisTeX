@@ -53,4 +53,4 @@ RUN rm -rf pythontex-files-test __pycache__ script.tex.aux
 
 # PDFをFlaskアプリで見れるようにする
 ADD script/download_flask.py /root/tex/download_flask.py
-RUN python download_flask.py
+CMD python download_flask.py
