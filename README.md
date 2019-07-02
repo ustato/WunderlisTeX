@@ -26,7 +26,9 @@ WunderlistのタスクをLaTeXで可視化できるようにする
 
 ### Get Wunderlist API's key
 Go [Wunderlist Developer](https://developer.wunderlist.com/) and resistor information.
+
 Next, get `CLIENT ID` and `CLIENT SECRET`.
+
 Finally, fix `secret.yaml` in tex directory.
 
 ### Install Docker
@@ -48,11 +50,12 @@ Check [Docker Documentation](https://docs.docker.com/) and install docker.
 
 ### Make PDF
 Execute this command in WunderlisTeX directory.
+
 ~~~sh
 docker build -t <image name> .
 docker run -it -p 8000:8000 <image name>
 ~~~
 
-Now, you can see PDF in [http://localhost:8000/](http://localhost:8000/).
+Now, you can see PDF in [http://localhost:8000](http://localhost:8000).
 
 If you want to know this app, read [Dockerfile](Dockerfile).
