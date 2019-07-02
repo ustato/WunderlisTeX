@@ -50,8 +50,9 @@ Check [Docker Documentation](https://docs.docker.com/) and install docker.
 Execute this command in WunderlisTeX directory.
 ~~~sh
 docker build -t <image name> .
+docker run -it -p 8000:8000 <image name>
 ~~~
 
-Now, you can see PDF in [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+Now, you can see PDF in [http://localhost:8000/](http://localhost:8000/).
 
 If you want to know this app, read [Dockerfile](Dockerfile).
