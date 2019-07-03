@@ -29,7 +29,7 @@ Go [Wunderlist Developer](https://developer.wunderlist.com/) and resistor inform
 
 Next, get `CLIENT ID` and `CLIENT SECRET`.
 
-Finally, fix `secret.yaml` in tex directory.
+Finally, modify [`tex/secret.yaml`](tex/secret.yaml) in tex directory.
 
 ### Install Docker
 Check [Docker Documentation](https://docs.docker.com/) and install docker.
@@ -48,14 +48,17 @@ Check [Docker Documentation](https://docs.docker.com/) and install docker.
     * Making done task for the last week
 
 
-### Make PDF
-Execute this command in WunderlisTeX directory.
+### Compile test.tex and Make PDF
+
+1. Modify [`tex/test.tex`](tex/test.tex) what you want.
+
+2. Execute this command in this directory which [`Dockerfile`](Dockerfile) exists.
 
 ~~~sh
 docker build -t <image name> .
 docker run -it -p 8000:8000 <image name>
 ~~~
 
-Now, you can see PDF in [http://localhost:8000](http://localhost:8000).
+3. Now, you can see PDF in [http://localhost:8000](http://localhost:8000).
 
 If you want to know this app, read [Dockerfile](Dockerfile).
