@@ -27,7 +27,7 @@ WunderlistのタスクをLaTeXで可視化できるようにする
 ### Get Wunderlist API's key
 Go [Wunderlist Developer](https://developer.wunderlist.com/) and resistor information.
 
-Next, get `CLIENT ID` and `CLIENT SECRET`.
+Next, get `CLIENT ID` and `ACCESS TOKEN`(push `CREATE ACCESS TOKEN`).
 
 Finally, modify [`tex/secret.yaml`](tex/secret.yaml) in tex directory.
 
