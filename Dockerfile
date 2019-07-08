@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:lamain
 
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -42,13 +42,13 @@ RUN pip install -r requirements.txt
 
 
 # TeXをコンパイル
-ADD tex/test.tex /root/tex/test.tex
-RUN platex test.tex
-RUN pythontex test
-RUN platex test.tex
-RUN dvipdfmx test
-RUN rm -rf test.aux test.log test.dvi test.pytxcode test.synctex*
-RUN rm -rf pythontex-files-test __pycache__ script.tex.aux
+ADD tex/main.tex /root/tex/main.tex
+RUN platex main.tex
+RUN pythontex main
+RUN platex main.tex
+RUN dvipdfmx main
+RUN rm -rf main.aux main.log main.dvi main.pytxcode main.synctex*
+RUN rm -rf pythontex-files-main __pycache__ script.tex.aux
 
 
 # PDFをFlaskアプリで見れるようにする
