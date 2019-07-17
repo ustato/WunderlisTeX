@@ -96,24 +96,54 @@ class ToDoList:
         return tex_message
 
 
-    def get_completed_task_in_a_week(self):
-        tex_message = "\\begin{itemize}"
+    def itemize(process):
+        def wrapper(self, *args, **kwargs):
+            tex_message = ""
+
+            for lists in self.todolist.values():
+                temp_message = process(lists)
+
+                if (temp_message != ""):
+                    tex_message += (
+                            "\\item "
+                            + lists["title"]
+                            + "\\begin{itemize}"
+                            + temp_message
+                            + "\\end{itemize}")
+
+            if (tex_message != ""):
+                tex_message = (
+                        "\\begin{itemize}"
+                        + tex_message
+                        + "\\end{itemize}")
+
+            return tex_message
+        return wrapper
+
+
+    @itemize
+    def get_completed_task_in_a_week(lists):
+        temp_message = ""
         now = datetime.datetime.now()
 
-        for lists in self.todolist.values():
-            if (lists["completed_task"] != []):
-                tex_message += "\\item " + lists["title"]
-                tex_message += "\\begin{itemize}"
+        if (lists["completed_task"] != []):
+            for completed_task in lists["completed_task"]:
+                completed_at = datetime.datetime.strptime(
+                        completed_task["completed_at"],
+                        '%Y-%m-%dT%H:%M:%S.%fZ')
 
-                for completed_task in lists["completed_task"]:
-                    completed_at = datetime.datetime.strptime(
-                            completed_task["completed_at"],
-                            '%Y-%m-%dT%H:%M:%S.%fZ')
+                if (completed_at > (now - datetime.timedelta(days=7))):
+                    temp_message += "\\item " + completed_task["title"]
 
-                    if (completed_at > (now - datetime.timedelta(days=7))):
-                        tex_message += "\\item " + completed_task["title"]
+        return temp_message
 
-                tex_message += "\\end{itemize}"
-        tex_message += "\\end{itemize}"
 
-        return tex_message
+    @itemize
+    def get_starred_task(lists):
+        temp_message = ""
+
+        for task in lists["tasks"]:
+            if (task["starred"] and (not task["completed"])):
+                temp_message += "\\item " + task["title"]
+
+        return temp_message
